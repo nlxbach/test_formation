@@ -73,3 +73,30 @@ plot.FuzzyDouble <- function(x, xlab = "x", ylab = "Double",
   # Add the regression line
   graphics::lines(x$x, 2 * x$x, col = LineCol)
 }
+
+
+#' Plot FuzzyDouble
+#'
+#' Plot a FuzzyDouble object with ggplot2
+#'
+#' @inheritParams plot.FuzzyDouble
+#' @param object The \code{\link{FuzzyDouble}} object
+#' @param ... Extra parameters passed to \code{\link{autoplot}}
+#'
+#' @return A \code{\link{ggplot}} object.
+#'
+#' @importFrom ggplot2 autoplot
+#' @method autoplot FuzzyDouble
+#' @export
+#'
+#' @examples
+#' autoplot(FuzzyDouble(1:10))
+autoplot.FuzzyDouble <- function(object, xlab = "x",
+                                 ylab = "Double", ..., LineCol = "red") {
+  # ggplot
+  thePlot <- ggplot2::ggplot(data = object, ggplot2::aes_(x = ~x,y = ~y)) +
+    ggplot2::geom_point() +
+    ggplot2::labs(x = xlab, y = ylab) +
+    ggplot2::geom_line(ggplot2::aes_(y = ~2 * x), colour = LineCol)
+  return(thePlot)
+}
